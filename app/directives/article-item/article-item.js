@@ -4,7 +4,7 @@ angular.module('hunews.directives.articleItem', [])
 			restrict: 'E',
 			scope: {
 				article: '=',
-				loadArticles: '&'
+				loadArticles: '='
 			},
 			templateUrl: 'app/directives/article-item/article-item.html',
 			controller: function($scope) {
@@ -22,7 +22,13 @@ angular.module('hunews.directives.articleItem', [])
 			            // The object was retrieved successfully.
 			            article.set("visible", value);
 			            article.save();
-			            $scope.loadArticles();
+			            article.save(null, {
+
+			              success: function(art) {
+			              	$scope.loadArticles();
+			              }
+
+			            });
 
 			          },
 			          error: function(object, error) {
