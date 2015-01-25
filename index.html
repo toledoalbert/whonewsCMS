@@ -47,7 +47,7 @@
         <div id="left-panel" class="col-sm-3">
           <div class="row" id="left-panel-header">
             <h3 class="col-sm-6">Articles</h3>
-            <h2 class="col-sm-6">+</h2>
+            <h2 class="col-sm-6" ng-click="newPost()">+</h2>
           </div>
           <ul class="articles">
             <article-item ng-repeat="article in articles" loadArticles="loadArticles()" ng-click="editThis(article)" article="article"></article-item>

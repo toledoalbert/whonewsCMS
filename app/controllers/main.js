@@ -58,8 +58,6 @@ angular.module('app')
 
             newArticle.setTitle($scope.editableTitle);
             newArticle.setContent($scope.editableContent);
-            newArticle.setVisible(visible);
-
             newArticle.save(null, {
 
               success: function(art) {
@@ -143,6 +141,20 @@ angular.module('app')
               }
             });
         }
+    };
+
+    $scope.newPost = function() {
+
+        var confirm = window.confirm("You are about to start a new article, did you save your current post?");
+        if (confirm == true) {
+            $scope.editableId = "";
+            $scope.editableContent = "";
+            $scope.editableTitle = "";
+            $scope.isNew = true;
+        } else {
+            console.log("New article canceled.");
+        }
+
     };
 
 }])
