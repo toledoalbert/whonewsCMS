@@ -58,12 +58,19 @@ angular.module('app')
 
             newArticle.setTitle($scope.editableTitle);
             newArticle.setContent($scope.editableContent);
-            newArticle.save();
-            $scope.loadArticles();
-            $scope.isNew = false;
-            $scope.editableTitle = newArticle.getTitle();
-            $scope.editableContent = newArticle.getContent();
-            $scope.editableId = newArticle.id;
+            newArticle.setVisible(visible);
+
+            newArticle.save(null, {
+
+              success: function(art) {
+
+                $scope.loadArticles();
+                $scope.isNew = false;
+                $scope.editableId = newArticle.id;
+
+              }
+
+            });
 
         } else {
 
@@ -91,25 +98,51 @@ angular.module('app')
 
     $scope.publishEdited = function() {
 
-        var query = new Parse.Query("Article");
+        if($scope.isNew) {
 
-        query.get($scope.editableId, {
+            var Article = Parse.Object.extend("Article");
 
-          success: function(article) {
+            var newArticle = new Article();
 
-            $scope.saveEdited();
+            newArticle.setTitle($scope.editableTitle);
+            newArticle.setContent($scope.editableContent);
+            newArticle.setVisible(true);
 
-            // The object was retrieved successfully.
-            article.set("visible", true);
-            article.save();
+            newArticle.save(null, {
 
-          },
-          error: function(object, error) {
-            // The object was not retrieved successfully.
-            // error is a Parse.Error with an error code and message.
-            console.log("Error occured: " + error.message);
-          }
-        });
-    }
+              success: function(art) {
+
+                $scope.loadArticles();
+                $scope.isNew = false;
+                $scope.editableId = newArticle.id;
+
+              }
+
+            });
+
+        } else {
+
+            var query = new Parse.Query("Article");
+
+            query.get($scope.editableId, {
+
+              success: function(article) {
+
+                // The object was retrieved successfully.
+                article.set("title", $scope.editableTitle);
+                article.set("content", $scope.editableContent);
+                article.set("visible", true);
+                article.save();
+                $scope.loadArticles();
+
+              },
+              error: function(object, error) {
+                // The object was not retrieved successfully.
+                // error is a Parse.Error with an error code and message.
+                console.log("Error occured: " + error.message);
+              }
+            });
+        }
+    };
 
 }])

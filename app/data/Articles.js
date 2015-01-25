@@ -13,7 +13,7 @@ angular.module('hunews.models.Article', ['parse-angular.enhance'])
 	var Article = Parse.Object.extend({
 		className:"Article",
 		// Extend the object with getter and setters  (see parse-angular-patch GitHub repo)
-		attrs: ["title", "content", "image", "user", "id"]
+		attrs: ["title", "content", "image", "user", "objectId", "visible"]
 	});
 
 
