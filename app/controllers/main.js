@@ -4,6 +4,7 @@ angular.module('app')
 .controller('MainController', ['$scope', '$state', function($scope, $state) {
 
     $scope.isNew = true;
+    $scope.toBeSaved = false;
 
     $scope.loadArticles = function() {
         console.log("loading articles");
@@ -45,6 +46,7 @@ angular.module('app')
         $scope.editableTitle = article.title;
         $scope.editableContent = article.content;
         $scope.editableId = article.id;
+        $scope.isNew = false;
 
     };
 
@@ -65,6 +67,7 @@ angular.module('app')
                 $scope.loadArticles();
                 $scope.isNew = false;
                 $scope.editableId = newArticle.id;
+                $scope.toBeSaved = false;
 
               }
 
@@ -81,8 +84,16 @@ angular.module('app')
                 // The object was retrieved successfully.
                 article.set("title", $scope.editableTitle);
                 article.set("content", $scope.editableContent);
-                article.save();
-                $scope.loadArticles();
+                article.save(null, {
+
+                  success: function(art) {
+
+                    $scope.loadArticles();
+                    $scope.toBeSaved = false;
+
+                  }
+
+                });
 
               },
               error: function(object, error) {
@@ -113,6 +124,7 @@ angular.module('app')
                 $scope.loadArticles();
                 $scope.isNew = false;
                 $scope.editableId = newArticle.id;
+                $scope.toBeSaved = false;
 
               }
 
@@ -130,8 +142,16 @@ angular.module('app')
                 article.set("title", $scope.editableTitle);
                 article.set("content", $scope.editableContent);
                 article.set("visible", true);
-                article.save();
-                $scope.loadArticles();
+                article.save(null, {
+
+                  success: function(art) {
+
+                    $scope.loadArticles();
+                    $scope.toBeSaved = false;
+
+                  }
+
+                });
 
               },
               error: function(object, error) {
@@ -145,16 +165,31 @@ angular.module('app')
 
     $scope.newPost = function() {
 
-        var confirm = window.confirm("You are about to start a new article, did you save your current post?");
-        if (confirm == true) {
+        if($scope.toBeSaved) {
+            var confirm = window.confirm("You are about to start a new article and you didn't save the post you are working on. Are you sure?");
+            if (confirm == true) {
+                $scope.editableId = "";
+                $scope.editableContent = "";
+                $scope.editableTitle = "";
+                $scope.isNew = true;
+            } else {
+                console.log("New article canceled.");
+            }
+        }else {
             $scope.editableId = "";
             $scope.editableContent = "";
             $scope.editableTitle = "";
             $scope.isNew = true;
-        } else {
-            console.log("New article canceled.");
         }
 
     };
+
+    $scope.$watch('editableTitle', function() {
+        $scope.toBeSaved = true;
+    });
+
+    $scope.$watch('editableContent', function() {
+        $scope.toBeSaved = true;
+    });
 
 }])

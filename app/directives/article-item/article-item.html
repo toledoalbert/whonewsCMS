@@ -1,7 +1,8 @@
-<li class="article-cell">
+<li class="article-cell" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
   <div class="article-cell-content">
-    <h5 class="article-title">{{title}}</h5>
-    <p class="hide-article" ng-show="visible" ng-click="showHideArticle(false)">Hide</p>
-    <p class="show-article" ng-hide="visible" ng-click="showHideArticle(true)">Show</p>
+    <h5 class="article-title" ng-class="{'hover':hover}" ng-click="editThis(article)">{{title}}</h5>
+    <p class="edit-article" ng-show="hover" ng-click="editThis(article)">Edit</p>
+    <p class="hide-article" ng-show="visible && hover" ng-click="showHideArticle(false)">Hide</p>
+    <p class="show-article" ng-hide="visible || !hover" ng-click="showHideArticle(true)">Show</p>
   </div>
 </li>

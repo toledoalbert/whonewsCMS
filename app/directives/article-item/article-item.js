@@ -4,10 +4,12 @@ angular.module('hunews.directives.articleItem', [])
 			restrict: 'E',
 			scope: {
 				article: '=',
-				loadArticles: '='
+				loadArticles: '=',
+				editArticle: '='
 			},
 			templateUrl: 'app/directives/article-item/article-item.html',
 			controller: function($scope) {
+				$scope.editThis = $scope.editArticle;
 				$scope.title = $scope.article.title;
 				$scope.visible = $scope.article.visible;
 

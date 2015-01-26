@@ -54,7 +54,7 @@ ul {
 	padding: 20px;
 	border-bottom: 1px solid rgb(240, 239, 239);
 	color: rgb(137, 137, 137);
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 #left-panel .articles .article-cell .article-cell-content:hover {
@@ -65,6 +65,11 @@ ul {
 	line-height: 18px;
 	font-size: 12px;
 	font-weight: 300;
+	cursor: pointer;
+}
+
+.article-title.hover {
+	color: black;
 }
 
 .article-cell-content p {
