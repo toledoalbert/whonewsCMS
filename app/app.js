@@ -14,6 +14,7 @@ angular.module('app', [
 	// 'hunews.states.about', 
 	
 	'hunews.directives.articleItem' /* an example directive */, 	
+	'hunews.directives.imageDrop' /* an example directive */, 	
 	
 	'ParseServices' /* this is the Parse SDK */
 ])

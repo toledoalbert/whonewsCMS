@@ -24,11 +24,18 @@ angular.module('app')
 
               var object = results[i];
 
+              var img = "";
+
+              if(object.get('image')){
+                img = object.get('image').url();
+              }
+
               $scope.articles.push({
                 title: object.get('title'),
                 content: object.get('content'),
                 visible: object.get('visible'),
-                id: object.id
+                id: object.id,
+                image: img
                 });
             }
           },
@@ -46,6 +53,8 @@ angular.module('app')
         $scope.editableTitle = article.title;
         $scope.editableContent = article.content;
         $scope.editableId = article.id;
+        $scope.editableImage = article.image;
+        $('#image-drop').css('background', 'url(' + article.image + ') no-repeat');
         $scope.isNew = false;
 
     };
@@ -60,6 +69,7 @@ angular.module('app')
 
             newArticle.setTitle($scope.editableTitle);
             newArticle.setContent($scope.editableContent);
+            newArticle.setImage($scope.editableImage);
             newArticle.save(null, {
 
               success: function(art) {
@@ -84,6 +94,7 @@ angular.module('app')
                 // The object was retrieved successfully.
                 article.set("title", $scope.editableTitle);
                 article.set("content", $scope.editableContent);
+                article.set("image", $scope.editableImage);
                 article.save(null, {
 
                   success: function(art) {
@@ -191,5 +202,76 @@ angular.module('app')
     $scope.$watch('editableContent', function() {
         $scope.toBeSaved = true;
     });
+
+    var dropArea = $('#image-drop');
+
+    $('*').on('dragover', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+    });
+
+    $('*').on('drop', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+    });
+
+    dropArea.on('dragenter', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).addClass('dragging');
+        console.log('dragover');
+    });
+
+    dropArea.on('dragover', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+
+    dropArea.on('dragleave', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).removeClass('dragging');
+    });
+
+    dropArea.on('drop', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).removeClass('dragging');
+
+        var file  = e.originalEvent.dataTransfer.files[0];
+
+        var parseFile = new Parse.File(file.name, file, file.type);
+
+        parseFile.save().then(function() {
+
+            console.log('parse file saved');
+          
+            $scope.editableImage = parseFile;
+            $scope.toBeSaved = true;
+            dropArea.css('background', 'url(' + parseFile.url() + ') no-repeat');
+
+        }, function(error) {
+          alert('There was a problem uploading the file: ' + error.message);
+        });
+
+        console.log('dropped', file);
+    });
+
+    // $scope.imageDropped = function(){
+    //     //Get the file
+    //     var file = $scope.uploadedFile;
+
+    //     //Upload the image
+    //     //(Uploader is a service in my application, you will need to create your own)
+    //     // Uploader.uploadImage(file).then(
+    //     //     function(imageUrl){
+    //     //         //Application-specific stuff...
+    //     //     }
+    //     // );
+
+    //     // //Clear the uploaded file
+    //     // $scope.uploadedFile = null;
+    //     console.log("image dropped");
+    // };
 
 }])

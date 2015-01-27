@@ -143,5 +143,16 @@ button#publish:focus, button#save:focus {
 	outline: none;
 }
 
+#image-drop {
+	height: 200px;
+	padding: 40px;
+	border: 2px dotted grey;	
+	color: grey;
+	width: 100%;
+	background-size: 100% auto !important;
+}
 
+#image-drop.dragging {
+	border: 2px dotted black;
+}
 

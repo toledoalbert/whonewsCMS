@@ -59,6 +59,7 @@
           class="dropzone"
           id="my-awesome-dropzone">
           </form> -->
+          <div type="file" id="image-drop"></div>
           <input type="text" class="sm-col-12" placeholder="Article Title" id="article-title" ng-model="editableTitle">
           <textarea class="sm-col-12" id="article-content" placeholder="Enter article content here..." ng-model="editableContent"></textarea>
           <button id="save" ng-click="saveEdited()">Save</button>
@@ -84,6 +85,7 @@
     
     <!-- Directives -->
     <script src="app/directives/article-item/article-item.js"></script>
+    <script src="app/directives/image-drop/image-drop.js"></script>
     
     <!-- Controllers -->
     <script src="app/controllers/main.js"></script>
