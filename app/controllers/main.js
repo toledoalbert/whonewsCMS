@@ -30,6 +30,8 @@ angular.module('app')
                 img = object.get('image').url();
               }
 
+              console.log(img);
+
               $scope.articles.push({
                 title: object.get('title'),
                 content: object.get('content'),
@@ -70,6 +72,7 @@ angular.module('app')
             newArticle.setTitle($scope.editableTitle);
             newArticle.setContent($scope.editableContent);
             newArticle.setImage($scope.editableImage);
+            newArticle.setVisible(false);
             newArticle.save(null, {
 
               success: function(art) {

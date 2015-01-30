@@ -8,10 +8,14 @@ angular.module('hunews.directives.articleItem', [])
 				editArticle: '='
 			},
 			templateUrl: 'app/directives/article-item/article-item.html',
-			controller: function($scope) {
+			controller: function($scope, $element) {
 				$scope.editThis = $scope.editArticle;
 				$scope.title = $scope.article.title;
 				$scope.visible = $scope.article.visible;
+				$scope.img = $scope.article.image;
+
+				console.log($element);
+				$element.find('li').css('background', 'url(' + $scope.img + ') no-repeat');
 
 				$scope.showHideArticle = function(value) {
 

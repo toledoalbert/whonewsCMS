@@ -59,7 +59,10 @@
           class="dropzone"
           id="my-awesome-dropzone">
           </form> -->
-          <div type="file" id="image-drop"></div>
+          <div type="file" id="image-drop">
+            <p>Drop an image here to upload</p>
+            <h4 id="close">X Remove</h4>
+          </div>
           <input type="text" class="sm-col-12" placeholder="Article Title" id="article-title" ng-model="editableTitle">
           <textarea class="sm-col-12" id="article-content" placeholder="Enter article content here..." ng-model="editableContent"></textarea>
           <button id="save" ng-click="saveEdited()">Save</button>
